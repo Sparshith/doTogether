@@ -77,7 +77,7 @@ function startTimer() {
   if (tens > 9) {
     $('#tens').html(tens);
   }
-  if (tens > 99) {
+  if (tens > 59) {
     seconds++;
     $('#seconds').html("0" + seconds);
     tens = 0;

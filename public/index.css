@@ -1,15 +1,23 @@
 body {
     background: #008080;
     height: 100%;
+    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
+    width: 1200px;
+    margin: auto;
 }
 .wrapper {
     width: 800px;
     margin: 30px auto;
-    color: #fff;
+    color: #0d0d0d;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #DDD;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
+
 h2 {
-    font-family: "Roboto", sans-serif;
     font-weight: 100;
     font-size: 2em;
     text-transform: uppercase;
@@ -17,14 +25,18 @@ h2 {
 #seconds,
 #tens,
 #dots {
-    font-size: 2em;
+    font-size: 4em;
     font-weight: bold;
+    font-family: 'Copse';
 }
+
+
+
 button {
     border-radius: 5px;
     background: #008080;
     color: #fff;
-    border: solid 1px #fff;
+    border: solid 1px #ddd;
     text-decoration: none;
     cursor: pointer;
     font-size: 1.2em;
@@ -33,6 +45,7 @@ button {
     margin: 10px;
     outline: none;
     margin-top: 20px;
+    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
 }
 button:hover {
     transition: all 0.5s ease-in-out;
@@ -40,3 +53,5 @@ button:hover {
     border: solid 1px #fff;
     color: #008080;
 }
+
+

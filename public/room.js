@@ -6,7 +6,7 @@ var Interval;
 
 $(function () {
   var socket = io();
-  var room = "nixiespar";
+  var room = location.href.substring(location.href.lastIndexOf('/') + 1);
   socket.on('connect', function() {
     socket.emit('room', room);
   });

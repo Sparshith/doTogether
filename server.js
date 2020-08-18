@@ -10,11 +10,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/rooms/:roomId', function(req, res) {
+  res.sendFile(__dirname + '/room.html');
+});
+
 
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-
   socket.on('room', function(room) {
   	console.log("user connected to room " + room)
     socket.join(room);

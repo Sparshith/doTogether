@@ -1,11 +1,12 @@
 var seconds = 00;
-var tens = 00;
+var minutes = 00;
+var hours = 00;
 var Interval;
 
 
 $(function () {
   var socket = io();
-  var room = location.href.substring(location.href.lastIndexOf('/') + 1);
+  var room = "nixiespar";
   socket.on('connect', function() {
     socket.emit('room', room);
   });
@@ -53,7 +54,7 @@ $(function () {
 function start() {
   console.log("start called")
   clearInterval(Interval);
-  Interval = setInterval(startTimer, 10);
+  Interval = setInterval(startTimer, 1000);
 }
 
 function stop() {
@@ -63,29 +64,47 @@ function stop() {
 
 function reset() {
   clearInterval(Interval);
-  tens = "00";
-  seconds = "00";
-  $('#tens').html(tens);
-  $('#seconds').html(seconds);
+  hours = seconds = minutes = 0
+  $('#hours').html("00");
+  $('#minutes').html("00");
+  $('#seconds').html("00");
 }
 
 function startTimer() {
-  tens++;
-  if (tens < 9) {
-    $('#tens').html("0" + tens);
+  seconds++;
+  if (seconds == 60) {
+      seconds = 0;
+      minutes++;
+    secondsString = "00"
   }
-  if (tens > 9) {
-    $('#tens').html(tens);
+  else if (seconds < 10) {
+    secondsString = "0" + seconds  
   }
-  if (tens > 59) {
-    seconds++;
-    $('#seconds').html("0" + seconds);
-    tens = 0;
-    $('#tens').html("0" + 0);
+  else {
+    secondsString = seconds
   }
-  if (seconds > 9) {
-    $('#seconds').html(seconds);
+
+
+  if(minutes < 10) {
+      minutesString = "0" + minutes 
   }
+  else if(minutes == 60) {
+      hours++;
+      minutes = 0;
+      minutesString = "00"
+  }   
+  else {
+      minutesString = minutes 
+  }
+
+
+  if(hours < 10) {
+      hoursString = "0" + hours
+  } 
+  else {
+      hoursString = hours
+  }
+  $('#hours').html(hoursString);
+  $('#minutes').html(minutesString);
+  $('#seconds').html(secondsString);
 }
-
-

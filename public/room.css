@@ -1,5 +1,5 @@
 body {
-    background: #FFE333;
+    background: #FFC300;
     height: 100%;
     font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
     width: 1200px;
@@ -12,9 +12,10 @@ body {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    background-color: #Fefefe;
+    background-color: #ffffff;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-radius: 13px;
 }
 
 h2 {
@@ -23,35 +24,36 @@ h2 {
     text-transform: uppercase;
 }
 #seconds,
-#tens,
+#minutes,
+#hours,
 #dots {
-    font-size: 4em;
+    font-size: 4.3em;
     font-weight: bold;
-    font-family: 'Copse';
+    font-family: revert;
 }
 
 
 
 button {
-    border-radius: 5px;
-    background: #FFE333;
-    color: #0d0d0d;
+    border-radius: 7px;
+    background: #FFC300;
+    font-style: oblique;
+    color: #fff;
+    font-weight: bolder;
     border: solid 1px #ddd;
     text-decoration: none;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.6em;
     padding: 18px 10px;
     width: 150px;
     margin: 10px;
-    outline: none;
+    outline: auto;
     margin-top: 20px;
     font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
 }
 button:hover {
-    transition: all 0.5s ease-in-out;
-    background: #0d0d0d;
+    transition: all 0.2s ease-in-out;
+    background: black;
     border: solid 1px #fff;
-    color: #fdfdfd;
+    color: #FFC300;
 }
-
-

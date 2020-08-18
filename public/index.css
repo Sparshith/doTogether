@@ -1,5 +1,5 @@
 body {
-    background: #008080;
+    background: #FFE333;
     height: 100%;
     font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
     width: 1200px;
@@ -12,7 +12,7 @@ body {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    background-color: #DDD;
+    background-color: #Fefefe;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -34,8 +34,8 @@ h2 {
 
 button {
     border-radius: 5px;
-    background: #008080;
-    color: #fff;
+    background: #FFE333;
+    color: #0d0d0d;
     border: solid 1px #ddd;
     text-decoration: none;
     cursor: pointer;
@@ -49,9 +49,9 @@ button {
 }
 button:hover {
     transition: all 0.5s ease-in-out;
-    background: #fff;
+    background: #0d0d0d;
     border: solid 1px #fff;
-    color: #008080;
+    color: #fdfdfd;
 }
 
 

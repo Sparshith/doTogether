@@ -3,20 +3,70 @@ var minutes = 00;
 var hours = 00;
 var Interval;
 
-function createRandomString(length) {
-    var str = "";
-    for ( ; str.length < length; str += Math.random().toString(36).substr(2));
-    return str.substr(0, length);
-}
 
 $(function () {
-	$('#generate-link').on('click', function(e){
-		console.log("here")
-    var str = createRandomString(7);
-    var link = jQuery('<a>').attr('href', '/rooms/'+str).text('Click here to go to your doTogetheroom')
-    $("#output").html(link)
+  var socket = io();
+  var room = location.href.substring(location.href.lastIndexOf('/') + 1);
+  socket.on('connect', function() {
+    socket.emit('room', room);
+  });
+
+
+  socket.on('connect', function() {
+    socket.emit('room', room);
+  });
+
+  socket.on('timerEvent', function(eventType){
+    switch(eventType) {
+      case 'start':
+        start();
+        break;
+      case 'stop':
+        stop();
+        break;
+      case 'reset':
+        reset();
+        break;
+    }
+  });
+
+  /*  
+    Stopwatch code starts here
+  */
+
+
+  $('#button-start').on('click', function(e){
+    socket.emit('timerEvent', 'start');
+    start();
+    return false
+  });
+
+  $('#button-stop').on('click', function(e){
+    socket.emit('timerEvent', 'stop');
+    stop();
     return false;
   });
+
+  $('#button-reset').on('click', function(e){
+    reset();
+    socket.emit('timerEvent', 'reset');
+    return false;
+  });
+
+  /*  
+    Stopwatch code ends here
+  */
+
+  /*  
+    Create note code starts here
+  */
+  $("#create-note").click(function() {
+    $(this).before("<textarea></textarea>");
+  });
+
+  /*  
+    Create note JS code ends here
+  */
 
 });
 
@@ -77,4 +127,3 @@ function startTimer() {
   $('#minutes').html(minutesString);
   $('#seconds').html(secondsString);
 }
-

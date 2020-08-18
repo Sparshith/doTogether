@@ -3,28 +3,19 @@
   <head>
     <title>Do Together!</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis:400,500,600,700">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Copse:400,500,600,700">
-    <link rel="stylesheet" type="text/css" href="/index.css">
+    <link rel="stylesheet" type="text/css" href="/common.css">
   </head>
 
-  <script src="/hacktimer.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="/index.js"></script>
 
+
   <body>
-     <div class="wrapper">
-        <p>
-            <span id="hours">00</span>
-            <span id="dots">:</span>
-            <span id="minutes">00</span>
-            <span id="dots">:</span>
-            <span id="seconds">00</span>
-        </p>
-        <button id="button-start">Start</button>
-        <button id="button-stop">Stop</button>
-        <button id="button-reset">Reset</button>
-      </div>
+    <div class="wrapper">
+      <button id="generate-link">Create a room!</button>
+      <div id="output"> </div>
+    </div>
+  </body>
 </html>
 
 

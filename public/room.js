@@ -30,6 +30,10 @@ $(function () {
     }
   });
 
+  /*  
+    Stopwatch code starts here
+  */
+
 
   $('#button-start').on('click', function(e){
     socket.emit('timerEvent', 'start');
@@ -48,6 +52,21 @@ $(function () {
     socket.emit('timerEvent', 'reset');
     return false;
   });
+
+  /*  
+    Stopwatch code ends here
+  */
+
+  /*  
+    Create note code starts here
+  */
+  $("#create-note").click(function() {
+    $(this).before("<textarea></textarea>");
+  });
+
+  /*  
+    Create note JS code ends here
+  */
 
 });
 

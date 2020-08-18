@@ -5,6 +5,11 @@ body {
     width: 1200px;
     margin: auto;
 }
+
+.clear{
+    clear:both;
+}
+
 .wrapper {
     width: 800px;
     margin: 30px auto;
@@ -60,7 +65,7 @@ button:hover {
 
 * { box-sizing:border-box; }
 
-#create-note-wrapper { background:url(https://subtlepatterns.com/patterns/little_pluses.png) #cacaca; margin:30px; }
+#create-note-wrapper { background:url(https://subtlepatterns.com/patterns/little_pluses.png) #cacaca; margin:60px; }
 
 #create-note, textarea  { 
   float:left; 

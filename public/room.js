@@ -2,24 +2,29 @@ var seconds = 00;
 var minutes = 00;
 var hours = 00;
 var Interval;
+var room;
 
 /*
   Stopwatch sync code starts here
 */
 
 window.onload = function() {
+  room = location.href.substring(location.href.lastIndexOf('/') + 1);
   var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-  var storedTime = JSON.parse(localStorage.getItem("hhmmss"));
-  syncTimeOnReload(storedTime, Math.round(loadTime/1000))
+  var storedTime = JSON.parse(localStorage.getItem(room + "_curtime"));
+  var storedState = localStorage.getItem(room + "_state")
+  syncTimeOnReload(storedTime, Math.round(loadTime/1000), storedState)
 };
 
 
-function syncTimeOnReload(storedTime, loadTime) {
+function syncTimeOnReload(storedTime, loadTime, storedState) {
   hours = storedTime[0];
   minutes = storedTime[1];
   seconds = storedTime[2] + loadTime; 
+  if (storedState == "started") start();
+  else if (storedState == "stopped") stop();
+  else reset();
   parseTime(hours, minutes, seconds)
-  start();
 }
 
 function parseTime(hours,minutes,seconds) {
@@ -38,7 +43,6 @@ function parseTime(hours,minutes,seconds) {
 
 $(function () {
   var socket = io();
-  var room = location.href.substring(location.href.lastIndexOf('/') + 1);
   socket.on('connect', function() {
     socket.emit('room', room);
   });
@@ -106,11 +110,13 @@ function start() {
   console.log("start called")
   clearInterval(Interval);
   Interval = setInterval(startTimer, 1000);
+  localStorage.setItem(room + "_state", "started");
 }
 
 function stop() {
   console.log("stop called")
   clearInterval(Interval);
+  localStorage.setItem(room + "_state", "stopped");
 }
 
 function reset() {
@@ -119,6 +125,7 @@ function reset() {
   $('#hours').html("00");
   $('#minutes').html("00");
   $('#seconds').html("00");
+  localStorage.setItem(room + "_state", "reset");
 }
 
 function startTimer() {
@@ -157,7 +164,8 @@ function startTimer() {
   }
 
   var timeElapsed = [hours, minutes, seconds]
-  localStorage.setItem("hhmmss", JSON.stringify(timeElapsed));
+  localStorage.setItem(room + "_curtime", JSON.stringify(timeElapsed));
+
 
   $('#hours').html(hoursString);
   $('#minutes').html(minutesString);

@@ -1,3 +1,8 @@
+var seconds = 00;
+var minutes = 00;
+var hours = 00;
+var Interval;
+
 function createRandomString(length) {
     var str = "";
     for ( ; str.length < length; str += Math.random().toString(36).substr(2));
@@ -12,4 +17,7 @@ $(function () {
     $("#output").html(link)
     return false;
   });
+
 });
+
+

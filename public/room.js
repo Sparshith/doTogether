@@ -3,6 +3,38 @@ var minutes = 00;
 var hours = 00;
 var Interval;
 
+/*
+  Stopwatch sync code starts here
+*/
+
+window.onload = function() {
+  var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+  var storedTime = JSON.parse(localStorage.getItem("hhmmss"));
+  syncTimeOnReload(storedTime, Math.round(loadTime/1000))
+};
+
+
+function syncTimeOnReload(storedTime, loadTime) {
+  hours = storedTime[0];
+  minutes = storedTime[1];
+  seconds = storedTime[2] + loadTime; 
+  parseTime(hours, minutes, seconds)
+  start();
+}
+
+function parseTime(hours,minutes,seconds) {
+  (hours < 10) ? hoursString = "0" + hours : hoursString = hours;
+  (minutes < 10) ? minutesString = "0" + minutes : minutesString = minutes;
+  (seconds < 10) ? secondsString = "0" + seconds : secondsString = seconds;
+  $('#hours').html(hoursString);
+  $('#minutes').html(minutesString);
+  $('#seconds').html(secondsString);
+}
+
+/*
+  Stopwatch sync code ends here
+*/
+
 
 $(function () {
   var socket = io();
@@ -123,6 +155,10 @@ function startTimer() {
   else {
       hoursString = hours
   }
+
+  var timeElapsed = [hours, minutes, seconds]
+  localStorage.setItem("hhmmss", JSON.stringify(timeElapsed));
+
   $('#hours').html(hoursString);
   $('#minutes').html(minutesString);
   $('#seconds').html(secondsString);

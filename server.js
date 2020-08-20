@@ -27,10 +27,14 @@ io.on('connection', (socket) => {
     io.sockets.to(room).emit('timerEvent', eventType);
   });
 
+  socket.on('noteEvent', (noteEventMessage) => {
+    room = Object.keys(socket.rooms)[1];
+    socket.to(room).emit('noteEvent', noteEventMessage);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-
 });
 
 http.listen(3000, () => {

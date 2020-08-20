@@ -52,24 +52,12 @@ $(function () {
     socket.emit('room', room);
   });
 
-  socket.on('timerEvent', function(eventType){
-    switch(eventType) {
-      case 'start':
-        start();
-        break;
-      case 'stop':
-        stop();
-        break;
-      case 'reset':
-        reset();
-        break;
-    }
-  });
+
+  socketHandlers(socket);
 
   /*  
     Stopwatch code starts here
   */
-
 
   $('#button-start').on('click', function(e){
     socket.emit('timerEvent', 'start');
@@ -94,17 +82,75 @@ $(function () {
   */
 
   /*  
-    Create note code starts here
+    Sticky note code starts here
   */
   $("#create-note").click(function() {
-    $(this).before("<textarea></textarea>");
+    var noteId = $('.sticky-note').length + 1;
+    addNote(socket, noteId);
+    var noteEventMessage = {
+      type: "noteAdded",
+      noteId: noteId,
+    }
+    socket.emit('noteEvent', JSON.stringify(noteEventMessage));
   });
 
+  refreshNotesJS(socket);
   /*  
-    Create note JS code ends here
+    Sticky note  code ends here
   */
 
 });
+
+function addNote(socket, noteId) {
+  $('#create-note').before("<textarea class='sticky-note' data-note-id='"+ noteId +"'></textarea>");
+  refreshNotesJS(socket);
+}
+
+
+function socketHandlers(socket) {
+  socket.on('timerEvent', function(eventType){
+    switch(eventType) {
+      case 'start':
+        start();
+        break;
+      case 'stop':
+        stop();
+        break;
+      case 'reset':
+        reset();
+        break;
+    }
+  });
+
+  socket.on('noteEvent', function(encodedNoteEventMessage) {
+    var noteEventMessage = JSON.parse(encodedNoteEventMessage);
+    switch (noteEventMessage['type']) {
+      case 'noteAdded':
+        addNote(socket, noteEventMessage['noteId']);
+        break;
+      case 'textChanged':
+        addTextToNote(noteEventMessage['noteId'], noteEventMessage['text'])
+        break;
+    }
+  });
+}
+
+function addTextToNote(noteId, text) {
+  $('.sticky-note[data-note-id="'+ noteId +'"]').val(text);
+}
+
+function refreshNotesJS(socket) {
+  $(".sticky-note").on('change', function() {
+    var noteId = $(this).data('note-id');
+    var text = $(this).val();
+    var noteEventMessage = {
+      type: "textChanged",
+      noteId: noteId,
+      text: text,
+    }
+    socket.emit('noteEvent', JSON.stringify(noteEventMessage));
+  });
+}
 
 function start() {
   console.log("start called")

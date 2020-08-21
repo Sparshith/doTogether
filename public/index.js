@@ -9,15 +9,18 @@ function createRandomString(length) {
     return str.substr(0, length);
 }
 
+
 $(function () {
 	$('#generate-link').on('click', function(e){
 		console.log("here")
     var str = createRandomString(7);
-    var link = jQuery('<a>').attr('href', '/rooms/'+str).text('Click here to go to your doTogetheroom')
-    $("#output").html(link)
+    window.location.href = '/rooms/'+str
+    console.log('/rooms/'+str)
     return false;
   });
 
 });
+
+
 
 

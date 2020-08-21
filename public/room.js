@@ -15,6 +15,10 @@ window.onload = function() {
   syncTimeOnReload(storedTime, Math.round(loadTime/1000), storedState);
 };
 
+function back() {
+  window.location.href = '/'
+}
+
 
 function syncTimeOnReload(storedTime, loadTime, storedState) {
   if(!storedTime) return;
@@ -97,7 +101,10 @@ $(function () {
 
 
 function addNote(socket, noteId) {
+  var colors = ['mintcream','blanchedalmond','azure','cornsilk','lavender','aliceblue','lavenderblush'];
+  var noteColour = colors[Math.floor(Math.random() * colors.length)];
   $('#create-note').before("<textarea class='sticky-note' data-note-id='"+ noteId +"'></textarea>");
+  $('.sticky-note[data-note-id="'+ noteId +'"]').css('background-color',noteColour)
   refreshNotesJS(socket);
 }
 

@@ -1,0 +1,23 @@
+.wrapper {
+	width: 100%;
+	position: absolute;
+	height: 100%;
+}
+
+.leftSection {
+	position: relative;
+	background-color: #cb202d;
+	float: left;
+	width: 70%;
+	padding: 100px;
+	height: 100%;
+}
+
+.rightSection {
+	position: relative;
+	background-color: #dddddd;
+	float: right;
+	width: 30%;
+	height: 100%;
+	padding: 100px;
+}

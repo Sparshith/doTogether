@@ -1,0 +1,19 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: #FFC300;
+    height: 100%;
+    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
+    margin: 0px !important;
+}

@@ -2,22 +2,22 @@ var seconds = 00;
 var minutes = 00;
 var hours = 00;
 var Interval;
-var room;
+var room = location.href.substring(location.href.lastIndexOf('/') + 1);
 
 /*
   Stopwatch sync code starts here
 */
 
 window.onload = function() {
-  room = location.href.substring(location.href.lastIndexOf('/') + 1);
   var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
   var storedTime = JSON.parse(localStorage.getItem(room + "_curtime"));
   var storedState = localStorage.getItem(room + "_state")
-  syncTimeOnReload(storedTime, Math.round(loadTime/1000), storedState)
+  syncTimeOnReload(storedTime, Math.round(loadTime/1000), storedState);
 };
 
 
 function syncTimeOnReload(storedTime, loadTime, storedState) {
+  if(!storedTime) return;
   hours = storedTime[0];
   minutes = storedTime[1];
   seconds = storedTime[2] + loadTime; 
@@ -46,12 +46,6 @@ $(function () {
   socket.on('connect', function() {
     socket.emit('room', room);
   });
-
-
-  socket.on('connect', function() {
-    socket.emit('room', room);
-  });
-
 
   socketHandlers(socket);
 
@@ -95,15 +89,54 @@ $(function () {
   });
 
   refreshNotesJS(socket);
+  loadNotesFromLocalStorage(socket);
   /*  
     Sticky note  code ends here
   */
-
 });
+
 
 function addNote(socket, noteId) {
   $('#create-note').before("<textarea class='sticky-note' data-note-id='"+ noteId +"'></textarea>");
   refreshNotesJS(socket);
+}
+
+function getNotesKey() {
+  return room + "_" + "notes";
+}
+
+function addNoteToLocalStorage(noteId, text) {
+  var notes = localStorage.getItem(getNotesKey());
+  if(!notes) {
+    notes = {};
+  } else {
+    notes = JSON.parse(notes);
+  }
+  notes[noteId] = text;
+  localStorage.setItem(getNotesKey(), JSON.stringify(notes));
+}
+
+function loadNotesFromLocalStorage(socket) {
+  var notes = JSON.parse(localStorage.getItem(getNotesKey()));
+  if(!notes) {
+    var noteId = 1;
+    var text = 'This is a sticky note you can type and edit.';
+    addTextToNote(noteId, text);
+    addNoteToLocalStorage(noteId, text);
+    return;
+  }
+
+  for (var noteId in notes) {
+    if (notes.hasOwnProperty(noteId)) {
+      var text = notes[noteId];
+      if ($('.sticky-note[data-note-id="'+ noteId +'"]').length > 0) {
+        addTextToNote(noteId, text);
+      } else {
+        addNote(socket, noteId);
+        addTextToNote(noteId, text);
+      }
+    }
+  }
 }
 
 
@@ -129,7 +162,8 @@ function socketHandlers(socket) {
         addNote(socket, noteEventMessage['noteId']);
         break;
       case 'textChanged':
-        addTextToNote(noteEventMessage['noteId'], noteEventMessage['text'])
+        addTextToNote(noteEventMessage['noteId'], noteEventMessage['text']);
+        addNoteToLocalStorage(noteEventMessage['noteId'], noteEventMessage['text']);
         break;
     }
   });
@@ -143,6 +177,7 @@ function refreshNotesJS(socket) {
   $(".sticky-note").on('change', function() {
     var noteId = $(this).data('note-id');
     var text = $(this).val();
+    addNoteToLocalStorage(noteId, text);
     var noteEventMessage = {
       type: "textChanged",
       noteId: noteId,
@@ -153,14 +188,12 @@ function refreshNotesJS(socket) {
 }
 
 function start() {
-  console.log("start called")
   clearInterval(Interval);
   Interval = setInterval(startTimer, 1000);
   localStorage.setItem(room + "_state", "started");
 }
 
 function stop() {
-  console.log("stop called")
   clearInterval(Interval);
   localStorage.setItem(room + "_state", "stopped");
 }

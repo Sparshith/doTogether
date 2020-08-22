@@ -23,45 +23,98 @@
 }
 
 h1 {
-    text-align: -webkit-right;
-    font-size: 5em;
+	font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
+  font-size: 5em;
+  border-bottom: 3px dashed;
+  padding-bottom: 11px;
+  display: inline-block;
 }
 
 h3 {
-	margin: auto;
-    text-align: -webkit-right;
-    font-size: 1.5em;
+	font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
+  font-size: 1.5em;
 }
 
-.material-icons {
-	position: relative;
-    left: 31.5em;
-    padding-top: 1em;
+.leftSection .content {
+	text-align: right;
 }
 
+.room-created {
+	margin-top: 30px;
+}
 
-#generate-link {
+.room-created .text {
+	color: #fdfd96;
+	font-size: 2em;
+	text-align: center;
+	font-weight: bolder;
+}
+
+.room-created .subtext {
+  text-align: center;
+  color: #fdfd96;
+  margin-top: 10px;
+}
+
+#generate-link, .copy-link, .go-to-room {
     padding: 1.1em;
     font-size: 1.5em;
-    width: max-content;
     color: #fdfd96;
-    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
     font-weight: bolder;
     background-color: #0f0f0f;
-    margin-top: 6.5em;
+    margin-top: 1.5em;
     border: 1px solid;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
 }
 
+.copy-link, .go-to-room {
+	cursor: grab;
+}
+
+.go-to-room {
+	margin-top:10px;
+}
+
+
 #generate-link:hover {
-    padding: 1.1em;
-    font-size: 1.5em;
-    width: max-content;
     color: #0f0f0f;
-    font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
-    font-weight: bolder;
     background-color: #fdfd96;
-    margin-top: 6.5em;
-    border: 1px solid;
     transition: all 0.3s ease-in-out;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+input[type=text] {
+  border: 0;
+  background-color: transparent;
+  color: #fff;
+  font-size: .9em;
+  padding: 0.4em;
+  width: 80%;
+}
+
+input[type=submit] {
+  background-color: #1D99CE;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  float: right;
+  padding: 0.5em;
+  text-transform: uppercase;
+  width: 4.5em;
+}
+
+.room-created {
+	display: none;
 }
 

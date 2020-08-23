@@ -11,18 +11,23 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="/index.js"></script>
 
-
   <body>
     <div class="wrapper">
       <div class="leftSection">
-        <h1>doTogether</h1>
-        <h3>Create shared workspaces.</h3>
-        <h3>Set a common timer and share your notes with everyone in your room!</h3>
-        <span class="material-icons">hourglass_bottom</span>
+        <div class="content">
+          <h1>doTogether</h1>
+          <h3>Create shared workspaces.</h3>
+          <h3>Set a common timer and share your notes with everyone in your room!</h3>
+        </div>
       </div>
       <div class="rightSection">
-        <button id="generate-link"><span id="add-room">Create a room!</span></button>
-        <div id="output"> </div>
+        <button id="generate-link"><span id="add-room">Create a room</span></button>
+        <div class="room-created"> 
+          <div class="text">Room Created!</div>
+          <button class="copy-link" data-clipboard-text="">Copy link</button>  
+          <button class="go-to-room" data-redirect-url="">Go to room</button>
+          <!-- <div class="subtext">... create another room! </div> -->
+        </div>
       </div>
     </div>
   </body>

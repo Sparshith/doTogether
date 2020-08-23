@@ -33,6 +33,7 @@ h1 {
 h3 {
 	font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
   font-size: 1.5em;
+  margin-top: -1em
 }
 
 .leftSection .content {

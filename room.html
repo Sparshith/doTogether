@@ -17,7 +17,7 @@
   <script src="/analytics.js"></script>
   <body>
     <div>
-      <button class="back-button" onclick="back()"><< Back</button>
+      <button class="control back-button" onclick="back()"><< Back</button>
     </div>
      <div class="wrapper">
         <p>
@@ -27,14 +27,17 @@
             <span id="dots">:</span>
             <span id="seconds">00</span>
         </p>
-        <button id="button-start">Start</button>
-        <button id="button-stop">Stop</button>
-        <button id="button-reset">Reset</button>
+        <button id="button-start" class="control">Start</button>
+        <button id="button-stop" class="control">Stop</button>
+        <button id="button-reset" class="control">Reset</button>
       </div>
 
     <div class="clear"></div>
     <div id="create-note-wrapper">
-      <textarea class="sticky-note" data-note-id=1></textarea>
+    <div class="text">
+      <div contenteditable="true" class="sticky-note" data-note-id=1></div>
+      <button class="close" onclick="deleteNotes($(this))"><span class='material-icons'>delete</span></button>
+    </div>
       <div id="create-note">+</div> 
     </div>
 

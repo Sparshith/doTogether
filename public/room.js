@@ -101,10 +101,7 @@ $(function () {
 
 
 function addNote(socket, noteId) {
-  var colors = ['mintcream','blanchedalmond','azure','cornsilk','lavender','aliceblue','lavenderblush'];
-  var noteColour = colors[Math.floor(Math.random() * colors.length)];
-  $('#create-note').before("<textarea class='sticky-note' data-note-id='"+ noteId +"'></textarea>");
-  $('.sticky-note[data-note-id="'+ noteId +'"]').css('background-color',noteColour)
+  $('#create-note').before("<div class='text'><div contenteditable='true' class='sticky-note' data-note-id='"+ noteId +"'></div><button onclick='deleteNotes($(this))' class='close'><span class='material-icons'>delete</span></button></div>");
   refreshNotesJS(socket);
 }
 
@@ -134,6 +131,7 @@ function loadNotesFromLocalStorage(socket) {
   }
 
   for (var noteId in notes) {
+    if (notes[noteId] == null) continue;
     if (notes.hasOwnProperty(noteId)) {
       var text = notes[noteId];
       if ($('.sticky-note[data-note-id="'+ noteId +'"]').length > 0) {
@@ -177,13 +175,13 @@ function socketHandlers(socket) {
 }
 
 function addTextToNote(noteId, text) {
-  $('.sticky-note[data-note-id="'+ noteId +'"]').val(text);
+  $('.sticky-note[data-note-id="'+ noteId +'"]').html(text);
 }
 
 function refreshNotesJS(socket) {
-  $(".sticky-note").on('change', function() {
+  $(".sticky-note").on('input', function() {
     var noteId = $(this).data('note-id');
-    var text = $(this).val();
+    var text = $(this).html();
     addNoteToLocalStorage(noteId, text);
     var noteEventMessage = {
       type: "textChanged",
@@ -192,6 +190,13 @@ function refreshNotesJS(socket) {
     }
     socket.emit('noteEvent', JSON.stringify(noteEventMessage));
   });
+}
+
+function deleteNotes(thisObj) {
+  addNoteToLocalStorage(thisObj.siblings().data('note-id'), null);
+  var parent = thisObj.parent();
+  thisObj.remove();
+  parent.remove();
 }
 
 function start() {

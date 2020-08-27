@@ -32,7 +32,7 @@ h2 {
 
 
 
-button {
+.control-button {
     border-radius: 7px;
     background: #fdfd96;
     font-style: oblique;
@@ -48,7 +48,7 @@ button {
     font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
     border: none !important;
 }
-button:hover {
+.control-button:hover {
     transition: all 0.2s ease-in-out;
     background: #0f0f0f;
     color: #fdfd96;
@@ -82,11 +82,11 @@ button:hover {
   max-width: 1080px;
 }
 
-#create-note, textarea  { 
+#create-note, .text  { 
   float:left; 
   padding:25px 25px 40px;
   margin:0 20px 20px 0;
-  width:250px;
+  width:250px !important;
   height:250px; 
 }
 
@@ -104,11 +104,11 @@ button:hover {
 
 #create-note:hover { border-color:rgba(0,0,0,0.2); color:rgba(0,0,0,0.2); }
 
-textarea {
+.text {
   line-height:1.5;
   border:0;
   border-radius:3px;
-  background: aliceblue;
+  background: azure;
   box-shadow:0 4px 6px rgba(0,0,0,0.1);
   overflow:hidden;
   transition:box-shadow 0.5s ease;
@@ -116,5 +116,29 @@ textarea {
   max-width:520px;
   max-height:250px;
 }
-textarea:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
-textarea:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+.text:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
+.text:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
+
+.delete-button{
+  background-color: azure;
+  border: none !important;
+  display: inline;
+  margin-left:  13.5em; 
+  margin-top: 2em;
+}
+
+.delete-button:hover {
+  color: red;
+  border: none !important;
+  display: inline;
+  margin-left:  13.5em; 
+  margin-top: 2em;
+}
+
+.sticky-note {
+  font-family: monospace;
+  height: 12em;
+  overflow: scroll;
+  outline: none !important;
+}
+

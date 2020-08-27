@@ -32,7 +32,7 @@ h2 {
 
 
 
-.control {
+.control-button {
     border-radius: 7px;
     background: #fdfd96;
     font-style: oblique;
@@ -48,7 +48,7 @@ h2 {
     font-family: 'Dosis','Helvetica Neue', Helvetica,Arial,sans-serif;
     border: none !important;
 }
-.control:hover {
+.control-button:hover {
     transition: all 0.2s ease-in-out;
     background: #0f0f0f;
     color: #fdfd96;
@@ -119,7 +119,7 @@ h2 {
 .text:hover { box-shadow:0 5px 8px rgba(0,0,0,0.15); }
 .text:focus { box-shadow:0 5px 12px rgba(0,0,0,0.2); outline:none; }
 
-.close {
+.delete-button{
   background-color: azure;
   border: none !important;
   display: inline;
@@ -127,7 +127,7 @@ h2 {
   margin-top: 2em;
 }
 
-.close:hover {
+.delete-button:hover {
   color: red;
   border: none !important;
   display: inline;
@@ -136,6 +136,9 @@ h2 {
 }
 
 .sticky-note {
-  height: 10em;
+  font-family: monospace;
+  height: 12em;
   overflow: scroll;
+  outline: none !important;
 }
+

@@ -3,6 +3,7 @@ var minutes = 00;
 var hours = 00;
 var Interval;
 var room = location.href.substring(location.href.lastIndexOf('/') + 1);
+var socket;
 
 /*
   Stopwatch sync code starts here
@@ -46,7 +47,7 @@ function parseTime(hours,minutes,seconds) {
 
 
 $(function () {
-  var socket = io();
+  socket = io();
   socket.on('connect', function() {
     socket.emit('room', room);
   });
@@ -101,7 +102,7 @@ $(function () {
 
 
 function addNote(socket, noteId) {
-  $('#create-note').before("<div class='text'><div contenteditable='true' class='sticky-note' data-note-id='"+ noteId +"'></div><button onclick='deleteNotes($(this))' class='close'><span class='material-icons'>delete</span></button></div>");
+  $('#create-note').before("<div class='text'><div contenteditable='true' class='sticky-note' data-note-id='"+ noteId +"'></div><button onclick='deleteNote($(this))' class='delete-button'><span class='material-icons'>delete</span></button></div>");
   refreshNotesJS(socket);
 }
 
@@ -170,6 +171,18 @@ function socketHandlers(socket) {
         addTextToNote(noteEventMessage['noteId'], noteEventMessage['text']);
         addNoteToLocalStorage(noteEventMessage['noteId'], noteEventMessage['text']);
         break;
+      case 'nodeDeleted':
+        if (noteEventMessage['noteId'] == 1) {
+            addNoteToLocalStorage(1, 'This is a sticky note you can type and edit.');
+            $('.sticky-note[data-note-id="1"]').html('This is a sticky note you can type and edit.');
+            break;
+        }
+        addNoteToLocalStorage(noteEventMessage['noteId'], null);
+        parent = $('.sticky-note[data-note-id="'+ noteEventMessage['noteId'] +'"]').parent()
+        $('.sticky-note[data-note-id="'+ noteEventMessage['noteId'] +'"]').remove()
+        parent.remove()
+        console.log(localStorage.getItem(getNotesKey()));
+        break;
     }
   });
 }
@@ -192,11 +205,27 @@ function refreshNotesJS(socket) {
   });
 }
 
-function deleteNotes(thisObj) {
-  addNoteToLocalStorage(thisObj.siblings().data('note-id'), null);
-  var parent = thisObj.parent();
-  thisObj.remove();
-  parent.remove();
+function deleteNote(thisObj) {
+  var noteToBeDeleted = thisObj.siblings().data('note-id')
+  if(thisObj.siblings().data('note-id') == 1) {
+    addNoteToLocalStorage(1, 'This is a sticky note you can type and edit.');
+    thisObj.siblings().html('This is a sticky note you can type and edit.');
+    var noteEventMessage = {
+      type: "nodeDeleted",
+      noteId: noteToBeDeleted,
+    }
+    socket.emit('noteEvent', JSON.stringify(noteEventMessage));
+  } else {
+    addNoteToLocalStorage(noteToBeDeleted, null);
+    var parent = thisObj.parent();
+    thisObj.remove();
+    parent.remove();
+    var noteEventMessage = {
+        type: "nodeDeleted",
+        noteId: noteToBeDeleted,
+    }
+    socket.emit('noteEvent', JSON.stringify(noteEventMessage));
+  }
 }
 
 function start() {
